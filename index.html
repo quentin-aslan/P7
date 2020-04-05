@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P7</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+
+<body>
+    <!-- Navbar, formulaire pour filtrer les restaurants et barre de recherche -->
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-between">
+        <a class="navbar-brand" href="index.html">Trouvez le restaurant idéal ! <small>Quentin Aslan - P7</small> </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
+            aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <form class="form-inline col-lg-4">
+            <input class="form-control mr-sm-2 col-lg-8" type="search" placeholder="Search" id="search">
+            <button class="btn btn-success my-2 my-sm-0 col-lg-3" type="submit" id="sendSearch">Rechercher</button>
+        </form>
+        -
+        <!-- <button id="filterSend" class="btn btn-success" style="margin-left: 2%">Rechercher</button> -->
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav ml-auto">
+
+                <li class="mr-sm-2">
+                    <select class="form-control" id="filterStarsMin">$
+                        <option value="1">Nombre d'étoile min (1)</option>
+                        <!-- <option value="1">1</option> -->
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </li>
+
+                <li class="mr-sm-2">
+                    <select class="form-control" id="filterStarsMax">
+                        <option value="5">Nombre d'étoile max (5)</option>
+                        <!-- <option value="5">5</option> -->
+                        <option value="4">4</option>
+                        <option value="3">3</option>
+                        <option value="2">2</option>
+                        <option value="1">1</option>
+                    </select>
+                </li>
+                <li>
+                    <button id="filterSend" class="btn btn-success" style="margin-left: 2%">Rechercher</button>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Carte et liste des restaurants -->
+    <div id="map" class="col-lg-8 float-left">
+        <!-- MAP -->
+    </div>
+
+    <div id="changeRadius" class="col-lg-4 float-right">
+        <strong>Rechercher les restaurants dans un rayon de : </strong>
+        <form>
+            <div class="form-inline">
+                <select class="form-control col-lg-8 mr-sm-2" id="radius">
+                        <option value="5000" selected>5 km</option>
+                        <option value="4000">4 km</option>
+                        <option value="3000">3 km</option>
+                        <option value="2000">2 km</option>
+                        <option value="1000">1 km</option>
+                </select>
+                <input id="sendChangeRadius" type="submit" class="btn btn-info col-lg-3" value="Rechercher">
+            </div>
+        </form>
+        <hr>
+    </div>
+
+    <div id="listRestos" class="col-lg-4 float-right">
+        <div id="accordion">
+            Chargement des restaurants ...
+        </div>
+    </div>
+
+    <!-- Add Review -->
+    <div class="modal fade" id="modalReview" role="dialog" aria-labelledby="modalReview" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ajouter un Avis</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <h3 id="Review_name" class="text-info"></h3>
+                        <h4 id="Review_address"></h4>
+                    </p>
+
+                    <form>
+                        <div class="form-group">
+                            <label for="Review_comment">Commentaire :</label>
+                            <input type="text" class="form-control" id="Review_comment">
+                        </div>
+                        <div class="form-group">
+                            <label for="Review_stars">Note :</label>
+                            <select class="form-control" id="Review_stars">
+                                <option value="5">5</option>
+                                <option value="4">4</option>
+                                <option value="3">3</option>
+                                <option value="2">2</option>
+                                <option value="1">1</option>
+                            </select>
+                        </div>
+
+                </div>
+                <div class="modal-footer">
+                    <!-- Show cancel, submit && Hide wait in jquery -->
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                    <button id="Review_send" class="btn btn-success">Ajouter l'avis</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End ADD Review -->
+
+    <!-- ADD RESTO -->
+    <div class="modal fade" id="modalAdd" role="dialog" aria-labelledby="modalAdd" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ajouter un restaurant</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <!-- FORM RESTO -->
+                    <form>
+
+                        <input type="hidden" id="add_pos" />
+
+                        <div class="form-group">
+                            <label for="add_name">Nom du restaurant :</label>
+                            <input type="text" class="form-control" id="add_name">
+                        </div>
+
+                        <div class="add_address-group">
+                            <label for="add_address">Adresse du restaurant :</label>
+                            <input type="text" class="form-control" id="add_address">
+                        </div>
+
+                        <div id="add_avis">
+                            <!-- FORM Review -->
+                            <div class="form-group">
+                                <label for="add_comment">Commentaire :</label>
+                                <input type="text" class="form-control" id="add_comment">
+                            </div>
+                            <div class="form-group">
+                                <label for="add_stars">Note :</label>
+                                <select class="form-control" id="add_stars">
+                                    <option value="5">5</option>
+                                    <option value="4">4</option>
+                                    <option value="3">3</option>
+                                    <option value="2">2</option>
+                                    <option value="1">1</option>
+                                </select>
+                            </div>
+                        </div>
+
+                </div>
+                <div class="modal-footer">
+                    <!-- Show cancel, submit && Hide wait in jquery -->
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
+                    <button id="add_send" class="btn btn-success">Ajouter le restaurant</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END ADD RESTO -->
+
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/_resto.js"></script>
+    <script src="js/Resto.js"></script>
+    <script src="js/Map.js"></script>
+    <script src="js/init.js"></script>
+
+    <!-- API GOOGLE MAP -->
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpjNJBnVR1r9vARnI05aoDxPSLdThd8_w&libraries=places&callback=initMap"
+        async defer></script>
+    <!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpjNJBnVR1r9vARnI05aoDxPSLdThd8_w&libraries=places"></script> -->
+
+</body>
+
+</html>

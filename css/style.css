@@ -1,0 +1,49 @@
+#map {
+  min-height: 93vh;
+  position: fixed;
+ 
+}
+
+.btnReview {
+  margin-bottom: 2%;
+}
+
+#listRestos {
+  height: 100%;
+  background-color: #C4C4CC;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  overflow-x: hidden;
+}
+
+#changeRadius {
+  background-color: #C4C4CC;
+}
+
+nav {
+  margin: 0;
+  padding: 0;
+}
+
+/* Optional: Makes the sample page fill the window. */
+html, body {
+  background-color: #C4C4CC;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+ul {
+  list-style: none;
+}
+
+.btnAvis {
+  margin-bottom: 2%;
+}
+
+.card {
+  border: 0!important;
+   border-radius: 0!important;
+}
