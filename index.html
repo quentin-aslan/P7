@@ -30,7 +30,7 @@
             <ul class="navbar-nav ml-auto">
 
                 <li class="mr-sm-2">
-                    <select class="form-control" id="filterStarsMin">$
+                    <select class="form-control changeFilters" id="filterStarsMin">
                         <option value="1">Nombre d'étoile min (1)</option>
                         <!-- <option value="1">1</option> -->
                         <option value="2">2</option>
@@ -41,7 +41,7 @@
                 </li>
 
                 <li class="mr-sm-2">
-                    <select class="form-control" id="filterStarsMax">
+                    <select class="form-control changeFilters" id="filterStarsMax">
                         <option value="5">Nombre d'étoile max (5)</option>
                         <!-- <option value="5">5</option> -->
                         <option value="4">4</option>
@@ -49,9 +49,6 @@
                         <option value="2">2</option>
                         <option value="1">1</option>
                     </select>
-                </li>
-                <li>
-                    <button id="filterSend" class="btn btn-success" style="margin-left: 2%">Rechercher</button>
                 </li>
             </ul>
         </div>
@@ -67,14 +64,17 @@
         <form>
             <div class="form-inline">
                 <select class="form-control col-lg-8 mr-sm-2" id="radius">
-                        <option value="5000" selected>5 km</option>
+                        <option value="5000">5 km</option>
                         <option value="4000">4 km</option>
                         <option value="3000">3 km</option>
                         <option value="2000">2 km</option>
-                        <option value="1000">1 km</option>
+                        <option value="1000" selected>1 km</option>
+                        <option value="800">800 metres</option>
+                        <option value="500">500 metres</option>
                 </select>
                 <input id="sendChangeRadius" type="submit" class="btn btn-info col-lg-3" value="Rechercher">
             </div>
+            <strong class="text-info">20 resultats MAX</strong>
         </form>
         <hr>
     </div>
@@ -188,8 +188,8 @@
 
     <script src="js/jquery-3.4.1.js"></script>
     <script src="js/bootstrap.js"></script>
-    <script src="js/_resto.js"></script>
     <script src="js/Resto.js"></script>
+    <script src="js/Review.js"></script>
     <script src="js/Map.js"></script>
     <script src="js/init.js"></script>
 
