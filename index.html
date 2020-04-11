@@ -11,22 +11,23 @@
 
 <body>
     <!-- Navbar, formulaire pour filtrer les restaurants et barre de recherche -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark justify-content-between">
+    <nav id="navbar" class="navbar navbar-expand-md navbar-dark bg-dark justify-content-between">
         <a class="navbar-brand" href="index.html">Trouvez le restaurant idéal ! <small>Quentin Aslan - P7</small> </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
-        <form class="form-inline col-lg-4">
-            <input class="form-control mr-sm-2 col-lg-8" type="search" placeholder="Search" id="search">
-            <button class="btn btn-success my-2 my-sm-0 col-lg-3" type="submit" id="sendSearch">Rechercher</button>
-        </form>
         -
         <!-- <button id="filterSend" class="btn btn-success" style="margin-left: 2%">Rechercher</button> -->
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+
+            <form class="form-inline col-lg-6">
+                <input class="form-control mr-sm-2 col-lg-8" type="search" placeholder="Search" id="search">
+                <button class="btn btn-success my-2 my-sm-0 col-lg-3" type="submit" id="sendSearch">Rechercher</button>
+            </form>
+
             <ul class="navbar-nav ml-auto">
 
                 <li class="mr-sm-2">
@@ -106,15 +107,9 @@
                             <label for="Review_comment">Commentaire :</label>
                             <input type="text" class="form-control" id="Review_comment">
                         </div>
-                        <div class="form-group">
+                        <div class="form-group text-center">
                             <label for="Review_stars">Note :</label>
-                            <select class="form-control" id="Review_stars">
-                                <option value="5">5</option>
-                                <option value="4">4</option>
-                                <option value="3">3</option>
-                                <option value="2">2</option>
-                                <option value="1">1</option>
-                            </select>
+                            <div id="Review_stars"></div>
                         </div>
 
                 </div>
@@ -162,15 +157,9 @@
                                 <label for="add_comment">Commentaire :</label>
                                 <input type="text" class="form-control" id="add_comment">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group text-center">
                                 <label for="add_stars">Note :</label>
-                                <select class="form-control" id="add_stars">
-                                    <option value="5">5</option>
-                                    <option value="4">4</option>
-                                    <option value="3">3</option>
-                                    <option value="2">2</option>
-                                    <option value="1">1</option>
-                                </select>
+                                <div id="add_stars"></div>
                             </div>
                         </div>
 
@@ -187,6 +176,7 @@
     <!-- END ADD RESTO -->
 
     <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/jquery_rating.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/Resto.js"></script>
     <script src="js/Review.js"></script>

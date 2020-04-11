@@ -1,14 +1,16 @@
 class MapG {
+    /**
+     * @class MapG (Map est pris par google)
+     * @description Intérargie avec l'API de GoogleMap & avec les éléments de l'IHM (Map et Liste)
+     */
     constructor() {
-        this.fixeDisplay();
-
         this.api = new google.maps.Map(document.getElementById('map'), {
             center: { lat: -34.397, lng: 150.644 },
             zoom: 8,
         });
 
         this.markers = [];
-        this.restos = [];
+        this.restos = []; 
         this.geocoder = new google.maps.Geocoder;
         this.place = new google.maps.places.PlacesService(this.api);
         this.currentPos = {};
@@ -25,6 +27,9 @@ class MapG {
 
     // --- GETTERS ---
 
+    /**
+     * @return Position courante
+     */
     getCurrentPos() {
         return this.currentPos;
     }
@@ -60,7 +65,7 @@ class MapG {
     /**
      * @description On vérifie que la geolocalisation est activé sur le navigateur
      * @param {Callback} callback 
-     */
+     */ 
     checkGeo(callback) {
         // Car this, deviens l'objet geolocation
         const MapG = this;
@@ -105,6 +110,7 @@ class MapG {
             marker.addListener('click', function () {
                 //Animation JQuery
                 $("#listRestos").stop().animate({ scrollTop: $(`#${id}_head`).offset().top - 150 }, 1500);
+                $("html, body").stop().animate({ scrollTop: $(`#${id}_head`).offset().top - 150 }, 1500);
                 $(`#C${id}_collapse`).collapse('toggle');
                 MapG.displayReview(MapG.restos[id].getPlaceId());
 
@@ -181,7 +187,7 @@ class MapG {
     /**
      * @description Enlève le cercle de la map
      */
-    clearCircle() {
+    hideCircle() {
         if (typeof this.circle == "object") {
             this.circle.setMap(null);
         }
@@ -193,7 +199,7 @@ class MapG {
      * @param {Integer} radius Rayon du cercle
      */
     displayCircle(position, radius) {
-        this.clearCircle();
+        this.hideCircle();
         this.circle = new google.maps.Circle({
             strokeColor: '#000000',
             strokeOpacity: 0.5,
@@ -301,30 +307,30 @@ class MapG {
 
                 // IHM
                 const restoElmt = `
-          <div class="card">
-            <div class="card-header" id="${indice}_head">
-                <h5 class="mb-0">
-                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#C${indice}_collapse"
-                        aria-expanded="false" aria-controls="C${indice}_collapse">
-                      ${resto.getName()} - <span id="${indice}_starsAverage">${starsAverage.toFixed(1)}</span>
-                    </button>
-                </h5>
-            </div>
-  
-            <div id="C${indice}_collapse" class="collapse" aria-labelledby="${indice}_head" data-parent="#accordion">
-                <div class="card-body">
-                  <strong>${resto.getAddress()}</strong>
-  
-                  <ul id="${indice}_listReview"></ul>
-  
-                  <div class="text-center">
-                    <button type="button" class="btn btn-primary btn-smb btnReview" id="${indice}_Review">Ajouter un avis</button>
-                    <br />
-                  <img src="https://maps.googleapis.com/maps/api/streetview?size=300x200&location=${pos.lat},${pos.lng}&key=AIzaSyDpjNJBnVR1r9vARnI05aoDxPSLdThd8_w">
-                  </div>
-                </div>
-            </div>
-          </div>`;
+                    <div class="card">
+                        <div class="card-header" id="${indice}_head">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#C${indice}_collapse"
+                                    aria-expanded="false" aria-controls="C${indice}_collapse">
+                                ${resto.getName()} - <span id="${indice}_starsAverage">${starsAverage.toFixed(1)}</span>
+                                </button>
+                            </h5>
+                        </div>
+            
+                        <div id="C${indice}_collapse" class="collapse" aria-labelledby="${indice}_head" data-parent="#accordion">
+                            <div class="card-body">
+                            <strong>${resto.getAddress()}</strong>
+            
+                            <ul id="${indice}_listReview"></ul>
+            
+                            <div class="text-center">
+                                <button type="button" class="btn btn-primary btn-smb btnReview" id="${indice}_Review">Ajouter un avis</button>
+                                <br />
+                            <img src="https://maps.googleapis.com/maps/api/streetview?size=300x200&location=${pos.lat},${pos.lng}&key=AIzaSyDpjNJBnVR1r9vARnI05aoDxPSLdThd8_w">
+                            </div>
+                            </div>
+                        </div>
+                    </div>`;
                 ul.append(restoElmt);
 
                 // Listener pour zoom sur le resto
@@ -350,7 +356,7 @@ class MapG {
      * @param {String} placeId 
      */
     displayReview(placeId) {
-        const resto = this.restos.find((e) => e.placeId == placeId);
+        const resto = this.restos.find((e) => e.getPlaceId() == placeId);
         const indice = this.restos.indexOf(resto);
 
         $(`#${indice}_listReview`).html('<li class="text-danger">Chargement des avis ...</li>');
@@ -383,7 +389,7 @@ class MapG {
         $('#sendChangeRadius').click((e) => {
             e.preventDefault();
             this.setNearbySearch($('#radius').val());
-            this.clearCircle();
+            this.hideCircle();
             this.getNearbyPlace(this.getCurrentPos(), () => {
                 this.displayRestos();
             });
@@ -406,7 +412,7 @@ class MapG {
             e.preventDefault();
             const name = $('#Review_name').html();
             let coment = $('#Review_comment').val();
-            const stars = parseInt($('#Review_stars').val());
+            const stars = parseInt($('#Review_stars').attr('rating'));
 
             if (!coment) alert('Vous devez rentrer un commentaire !');
             else {
@@ -435,7 +441,7 @@ class MapG {
             e.preventDefault();
             let name = $('#add_name').val();
             let coment = $('#add_comment').val();
-            const stars = parseInt($('#add_stars').val());
+            const stars = parseInt($('#add_stars').attr('rating'));
             const address = $('#add_address').val();
             let pos = $('#add_pos').val();
             pos = JSON.parse(pos);
@@ -497,28 +503,13 @@ class MapG {
             });
         });
 
-    }
-
-    /**
-     * @description fixe la hauteur de la carte et la hauteur de la liste des restaurants
-     */
-    fixeDisplay() {
-        var heightNavigateur = window.innerHeight;
-        let heightNavbar = $('nav').css('height');
-        var heightMap = parseInt(heightNavigateur) - parseInt(heightNavbar);
-
-        let heightChangeRadius = $('#changeRadius').css('height');
-        var heightListResto = parseInt(heightMap) - parseInt(heightChangeRadius);
-        $('#listRestos').css('height', heightListResto);
-        $('#map').css('height', heightMap);
-    }
+        }
 
     /**
      * @description Initialise l'autocompletion pour que l'utilisateur ai une aide lors de sa recherche d'adresse
      */
     getAutocomplete() {
         let input = document.getElementById('search');
-        console.log(this.getCurrentPos());
         const options = {
             // bounds: this.getCurrentPos(),
             types: ['geocode']

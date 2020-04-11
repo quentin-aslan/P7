@@ -1,6 +1,6 @@
 class Resto {
     /**
-     * 
+     * @description Instance d'un restaurant
      * @param {String} placeId GoogleId du restaurant
      * @param {String} name Nom du restaurants
      * @param {String} address Adresse du restaurant
@@ -18,18 +18,34 @@ class Resto {
         this.reviews = [];
     }
 
+    /**
+     * @description Modifie le placeId du restaurant
+     * @param {String} placeId GoogleID du restaurant
+     */
     setPlaceId(placeId) {
         this.placeId = placeId;
     }
 
+    /**
+     * @description Modifie le nom du restaurant
+     * @param {String} name Nom du restaurant
+     */
     setName(name) {
         this.name = name;
     }
 
+    /**
+     * @description Modifie l'adresse du restaurant
+     * @param {String} address Adresse du restaurant
+     */
     setAddress(address) {
         this.address = address;
     }
 
+    /**
+     * @description Modifie la position du restaurant
+     * @param {Object} pos Position du restaurant
+     */
     setPos(pos) {
         this.position = {
             lat: pos.lat,
@@ -37,12 +53,16 @@ class Resto {
         };
     }
 
+    /**
+     * @description Modifie la note moyenne du restaurant
+     * @param {Float} starsAverage Note moyenne du restaurant
+     */
     setStarsAverage(starsAverage) {
         this.starsAverage = starsAverage;
     }
 
     /**
-     * On passe à true si les avis ont été chargé
+     * @description On passe à true si les avis ont été chargé
      * @param {Boolean} bool 
      */
     setApiReview(bool) {

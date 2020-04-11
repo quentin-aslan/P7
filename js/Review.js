@@ -1,6 +1,6 @@
 class Review {
     /**
-     * @description Un avis sur un restaurant
+     * @description Instance d'un avis sur un restaurant
      * @param {String} coment Commentaire de l'avis
      * @param {Float} stars Note de l'avis
      */

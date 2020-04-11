@@ -1,15 +1,34 @@
+@media only screen and (min-width : 1224px){
+  /* Seulement pour ordinateur ! (Car sur mobile tout est parfaitement responsive) */
+
+#navbar {
+    height: 7vh;
+  }
+ 
+  #map {
+    min-height: 93vh;
+    position: fixed;
+  }
+
+  #changeRadius {
+    height: 13vh;
+  }
+
+  #listRestos {
+    height: 80vh;
+  }
+
+}
+
 #map {
   min-height: 93vh;
   position: fixed;
- 
 }
-
 .btnReview {
   margin-bottom: 2%;
 }
 
 #listRestos {
-  height: 100%;
   background-color: #C4C4CC;
   margin: 0;
   padding: 0;
@@ -29,10 +48,10 @@ nav {
 /* Optional: Makes the sample page fill the window. */
 html, body {
   background-color: #C4C4CC;
-  height: 100%;
+  height: 100vh;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 ul {
@@ -47,3 +66,7 @@ ul {
   border: 0!important;
    border-radius: 0!important;
 }
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  /* Pour les téléphones uniquement */
+  }
